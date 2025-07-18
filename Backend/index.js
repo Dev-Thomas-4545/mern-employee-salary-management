@@ -4,6 +4,7 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import db from './config/Database.js';
 import journal from './config/Journalisation.js';
+import initialiserDonnees from './config/Initialisation.js';
 
 import SequelizeStore from 'connect-session-sequelize';
 import FileUpload from 'express-fileupload';
@@ -20,6 +21,7 @@ const store = new sessionStore({
 
 db.sync().then(() => {
     journal.info('Base de données synchronisée');
+    initialiserDonnees();
 }).catch((err) => {
     journal.error(`Erreur de synchronisation: ${err.message}`);
 });

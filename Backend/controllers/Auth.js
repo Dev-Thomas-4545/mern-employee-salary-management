@@ -1,6 +1,7 @@
 import DataPegawai from "../models/DataPegawaiModel.js";
 import argon2 from "argon2";
 import { verifyUser } from "../middleware/AuthUser.js";
+import journal from '../config/Journalisation.js';
 
 export const Login = async (req, res) => {
   let user = {};
@@ -90,5 +91,38 @@ export const changePassword = async (req, res) => {
     res.status(200).json({ msg: "Password Berhasil di Perbarui" });
   } catch (error) {
     res.status(400).json({ msg: error.message });
+  }
+};
+
+export const Register = async (req, res) => {
+  const {
+    nik, nama_pegawai, username, password, confPassword,
+    jenis_kelamin, jabatan, tanggal_masuk, status, hak_akses
+  } = req.body;
+
+  if (password !== confPassword) {
+    return res.status(400).json({ msg: 'Password dan Konfirmasi Password Tidak Cocok' });
+  }
+
+  try {
+    const hash = await argon2.hash(password);
+    await DataPegawai.create({
+      nik,
+      nama_pegawai,
+      username,
+      password: hash,
+      jenis_kelamin,
+      jabatan,
+      tanggal_masuk,
+      status,
+      photo: 'placeholder.png',
+      url: '',
+      hak_akses: hak_akses || 'user'
+    });
+
+    res.status(201).json({ msg: 'Inscription réussie' });
+  } catch (error) {
+    journal.error(error.message);
+    res.status(500).json({ msg: error.message });
   }
 };

@@ -3,6 +3,16 @@
 SiPeKa (Employee Payroll System) is a system used by companies to manage employee payroll processes efficiently and accurately. This system plays a key role in automating various tasks related to payroll, such as calculating payroll, processing attendance, and paying employee wages.<br/> In SiPeKa, employee information such as personal data, position and salary level is stored centrally. Every month, the system will retrieve employee attendance data and perform salary calculations based on the available information. This includes factors such as relevant hours worked, leave, overtime and deductions.</h5>
 <br/>
 
+## Guide d'installation rapide
+
+1. Dans le dossier `Backend`, exécutez `npm install` puis `npm start` pour lancer l'API.
+2. Ouvrez un second terminal, allez dans `Frontend` puis lancez `npm install` et `npm run dev`.
+3. Au premier démarrage, une base SQLite est créée ainsi qu'un compte administrateur par défaut :
+   - utilisateur : **admin**
+   - mot de passe : **admin123**
+4. L'endpoint `POST /register` permet ensuite d'inscrire de nouveaux utilisateurs.
+
+
   * [Configuration and Setup](#configuration-and-setup)
   * [Key Features](#key-features)
   * [Technologies used](#technologies-used)
