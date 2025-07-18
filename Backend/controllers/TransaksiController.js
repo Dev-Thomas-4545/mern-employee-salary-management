@@ -3,6 +3,7 @@ import DataPegawai from "../models/DataPegawaiModel.js";
 import DataJabatan from "../models/DataJabatanModel.js";
 import PotonganGaji from "../models/PotonganGajiModel.js";
 import moment from "moment";
+import journal from '../config/Journalisation.js';
 import "moment/locale/id.js";
 
 // method untuk menampilkan semua Data Kehadiran
@@ -54,7 +55,7 @@ export const viewDataKehadiran = async (req, res) => {
     });
     res.json(resultDataKehadiran);
   } catch (error) {
-    console.log(error);
+    journal.error(error);
   }
 };
 
@@ -150,7 +151,7 @@ export const createDataKehadiran = async (req, res) => {
       res.status(400).json({ msg: "Data nama sudah ada" });
     }
   } catch (error) {
-    console.log(error);
+    journal.error(error);
   }
 };
 
@@ -164,7 +165,7 @@ export const updateDataKehadiran = async (req, res) => {
     });
     res.status(200).json({ msg: "Data kehadiran berhasil diupdate" });
   } catch (error) {
-    console.log(error.msg);
+    journal.error(error.msg);
   }
 };
 
@@ -178,7 +179,7 @@ export const deleteDataKehadiran = async (req, res) => {
     });
     res.status(200).json({ msg: "Delete data berhasil" });
   } catch (error) {
-    console.log(error.msg);
+    journal.error(error.msg);
   }
 };
 
@@ -202,7 +203,7 @@ export const createDataPotonganGaji = async (req, res) => {
       res.json({ msg: "Tambah Data Potongan Gaji Berhasil" });
     }
   } catch (error) {
-    console.log(error);
+    journal.error(error);
   }
 };
 
@@ -214,7 +215,7 @@ export const viewDataPotongan = async (req, res) => {
     });
     res.json(dataPotongan);
   } catch (error) {
-    console.log(error);
+    journal.error(error);
   }
 };
 
@@ -229,7 +230,7 @@ export const viewDataPotonganByID = async (req, res) => {
     });
     res.json(dataPotongan);
   } catch (error) {
-    console.log(error);
+    journal.error(error);
   }
 };
 
@@ -243,7 +244,7 @@ export const updateDataPotongan = async (req, res) => {
     });
     res.status(200).json({ message: "Data Potongan berhasil diupdate" });
   } catch (error) {
-    console.log(error.message);
+    journal.error(error.message);
   }
 };
 
@@ -257,7 +258,7 @@ export const deleteDataPotongan = async (req, res) => {
     });
     res.status(200).json({ message: "Delete data berhasil" });
   } catch (error) {
-    console.log(error.message);
+    journal.error(error.message);
   }
 };
 
@@ -539,7 +540,7 @@ export const viewDataGajiById = async (req, res) => {
       res.json(foundData);
     }
   } catch (error) {
-    console.log(error);
+    journal.error(error);
     res.status(500).json({ msg: "Internal server error" });
   }
 };
@@ -563,7 +564,7 @@ export const viewDataGajiByName = async (req, res) => {
       res.json(foundData);
     }
   } catch (error) {
-    console.log(error);
+    journal.error(error);
     res.status(500).json({ msg: "Internal server error" });
   }
 };
@@ -685,8 +686,8 @@ export const dataLaporanGajiByYear = async (req, res) => {
         .status(404)
         .json({ msg: `Data tahun ${year} tidak ditemukan` });
     } else {
-      const laporanByYear = dataGajiByYear.map((data) => data.tahun)
-      console.log(laporanByYear)
+      const listeAnnee = dataGajiByYear.map((data) => data.tahun)
+      journal.debug(listeAnnee)
     }
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

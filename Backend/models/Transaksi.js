@@ -1,6 +1,7 @@
 import DataPegawai from './DataPegawaiModel.js';
 import DataJabatan from './DataJabatanModel.js';
 import DataKehadiran from './DataKehadiranModel.js';
+import journal from '../config/Journalisation.js';
 
 /* Method untuk mengambil Data Pegawai */
 
@@ -24,7 +25,7 @@ async function getDataPegawai() {
 
         return { data_nama_pegawai, data_nik, data_jabatan };
     } catch (error) {
-        console.log(error);
+        journal.error(error);
     }
 }
 
@@ -51,10 +52,10 @@ async function getDataKehadiran() {
         resultDataKehadiran.push({ nama_pegawai, nik, bulan, jenis_kelamin, nama_jabatan, hadir, sakit, alpha });
     });
 
-    console.log(resultDataKehadiran);
+    journal.debug(resultDataKehadiran);
 
     } catch (error) {
-    console.log(error);
+    journal.error(error);
     }
 }
 
@@ -80,6 +81,6 @@ async function getDataJabatan() {
 
         return resultDatajabatan;
     } catch (error) {
-        console.log(error);
+        journal.error(error);
     }
 }

@@ -1,6 +1,7 @@
 import DataPegawai from "../models/DataPegawaiModel.js";
 import argon2 from "argon2";
 import path from "path";
+import journal from '../config/Journalisation.js';
 
 // menampilkan semua data Pegawai
 export const getDataPegawai = async (req, res) => {
@@ -144,7 +145,7 @@ export const createDataPegawai = async (req, res) => {
 
             res.status(201).json({ success: true, message: "Registrasi Berhasil" });
         } catch (error) {
-            console.log(error.message);
+            journal.error(error.message);
             res.status(500).json({ success: false, message: error.message });
         }
     });

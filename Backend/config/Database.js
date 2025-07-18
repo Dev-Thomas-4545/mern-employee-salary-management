@@ -1,8 +1,13 @@
 import { Sequelize } from 'sequelize';
+import { resolve } from 'path';
+import journal from './Journalisation.js';
 
-const db = new Sequelize('db_penggajian3', 'root', '', {
-    host: "localhost",
-    dialect: "mysql"
+const cheminBase = resolve('database.sqlite');
+
+const db = new Sequelize({
+    dialect: 'sqlite',
+    storage: cheminBase,
+    logging: (msg) => journal.debug(msg)
 });
 
 export default db;

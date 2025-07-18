@@ -3,6 +3,7 @@ import {
     getDataKehadiran,
     viewDataGajiPegawaiByYear
 } from "./TransaksiController.js"
+import journal from '../config/Journalisation.js';
 
 // method untuk melihat laporan gaji pegawai
 export const viewLaporanGajiPegawai = async(req, res) => {
@@ -78,10 +79,10 @@ export const viewLaporanGajiPegawaiByName = async (req, res) => {
         } else {
           res.json(foundData);
         }
-      } catch (error) {
-        console.log(error);
-        res.status(500).json({ msg: "Internal server error" });
-      }
+        } catch (error) {
+          journal.error(error);
+          res.status(500).json({ msg: "Internal server error" });
+        }
   };
 
 // method untuk melihat laporan absensi pegawai berdasarkan bulan (menggunakan DROP DOWN)
@@ -164,7 +165,7 @@ export const viewSlipGajiByName = async (req, res) => {
           res.json(foundData);
         }
       } catch (error) {
-        console.log(error);
+        journal.error(error);
         res.status(500).json({ msg: "Internal server error" });
       }
 }
