@@ -3,6 +3,7 @@ import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import db from './config/Database.js';
+import journal from './config/Journalisation.js';
 
 import SequelizeStore from 'connect-session-sequelize';
 import FileUpload from 'express-fileupload';
@@ -17,9 +18,11 @@ const store = new sessionStore({
     db: db
 });
 
-/* (async() => {
-    await db.sync();
-})(); */
+db.sync().then(() => {
+    journal.info('Base de données synchronisée');
+}).catch((err) => {
+    journal.error(`Erreur de synchronisation: ${err.message}`);
+});
 
 dotenv.config();
 
@@ -51,5 +54,5 @@ app.use(AuthRoute);
 // store.sync();
 
 app.listen(process.env.APP_PORT, () => {
-    console.log('Server up and running...');
+    journal.info('Serveur démarré sur le port ' + process.env.APP_PORT);
 });

@@ -1,6 +1,7 @@
 import DataJabatan from "../models/DataJabatanModel.js";
 import DataPegawai from "../models/DataPegawaiModel.js";
 import { Op } from "sequelize";
+import journal from '../config/Journalisation.js';
 
 // menampilkan semua data jabatan
 export const getDataJabatan = async (req, res) => {
@@ -78,7 +79,7 @@ export const createDataJabatan = async (req, res) => {
         }
         res.status(201).json({ success: true, message: "Data Jabatan Berhasil di Simpan" });
     } catch (error) {
-        console.log(error.message);
+        journal.error(error.message);
         res.status(500).json({ success: false, message: error.message });
     }
 
